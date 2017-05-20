@@ -71,22 +71,24 @@ Setup the CodePen route:
 - Respond with the array of entries sorted by date.
 */
 app.get('/pens', (req, res) => {
+  const maxResults = 4
   const url = CODEPEN_COLLECTION_FEED_URL
   const parser = new xml2object(['item'])
-  const pens = []
+  const items = []
   parser.on('object', (name, obj) => {
-    const { title, link: url, ['dc:date']: date } = obj
-    if (pens.length < 3) {
-      pens.push({
-        title,
-        url,
-        date: moment(date).format('D MMM YYYY'),
-        'dc:date': obj['dc:date']
-      })
-    }
+    const momnt = moment(obj['dc:date'])
+    items.push({
+      date: momnt.format('D MMM YYYY'),
+      datetime: momnt.format('YYYY-MM-DD'),
+      title: obj.title,
+      url: obj.link
+    })
   })
   parser.on('end', () => {
-    res.json(pens.sort((a, b) => a['dc:date'] < b['dc:date']))
+    const responseData = items
+      .sort((a, b) => a.datetime < b.datetime)
+      .slice(0, maxResults)
+    res.json(responseData)
   })
   request(url).pipe(parser.saxStream)
 })
