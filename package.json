@@ -9,7 +9,7 @@
     "express": "^4.15.3",
     "moment": "^2.18.1",
     "request": "^2.81.0",
-    "twitter": "^1.7.0",
+    "twitter": "^1.7.1",
     "xml2object": "^0.1.2"
   },
   "scripts": {
