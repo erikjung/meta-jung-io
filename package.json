@@ -12,6 +12,9 @@
     "twitter": "^1.7.1",
     "xml2object": "^0.1.2"
   },
+  "engines": {
+    "node": "7.10.1"
+  },
   "scripts": {
     "start": "node server.js"
   }
